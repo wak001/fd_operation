@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- For assistance related to logback-translator or configuration  -->
+<!-- files in general, please contact the logback user mailing list -->
+<!-- at http://www.qos.ch/mailman/listinfo/logback-user             -->
+<!--                                                                -->
+<!-- For professional support please see                            -->
+<!-- http://www.qos.ch/shop/products/professionalSupport            -->
+<!--                                                                -->
+<configuration scan="true">
+  <property name="APP" value="fund_operation"/>
+  <property name="LOG_HOME" value="/export/log/${APP}"/>
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{yy-MM-dd.HH:mm:ss.SSS} [%-16t] %-5p %-22c{0} %X{ServiceId} - %m%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="DETAIL" class="ch.qos.logback.core.rolling.RollingFileAppender" additivity="false">
+    <File>${LOG_HOME}/${APP}_detail.log</File>
+    <encoder>
+      <pattern>%d{yy-MM-dd.HH:mm:ss.SSS} [%-16t] %-5p %-22c{0} %X{ServiceId} - %m%n</pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_HOME}/${APP}_detail.log.%d{yyyyMMdd}</fileNamePattern>
+    </rollingPolicy>
+  </appender>
+  <appender name="ACCESS" class="ch.qos.logback.core.rolling.RollingFileAppender" additivity="false">
+    <File>${LOG_HOME}/${APP}_access.log</File>
+    <encoder>
+      <pattern>%d{yy-MM-dd.HH:mm:ss.SSS};%X{ServiceId};%m%n</pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_HOME}/${APP}_access.log.%d{yyyyMMdd}</fileNamePattern>
+    </rollingPolicy>
+  </appender>
+  <logger name="ACCESS">
+    <appender-ref ref="ACCESS"/>
+  </logger>
+  <appender name="INVOCATION" class="ch.qos.logback.core.rolling.RollingFileAppender" additivity="false">
+    <File>${LOG_HOME}/${APP}_invocation.log</File>
+    <encoder>
+      <pattern>%d{yy-MM-dd.HH:mm:ss.SSS};%X{ServiceId};%m%n</pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_HOME}/${APP}_invocation.log.%d{yyyyMMdd}</fileNamePattern>
+    </rollingPolicy>
+  </appender>
+  <logger name="INVOCATION">
+    <appender-ref ref="INVOCATION"/>
+  </logger>
+  <logger name="INVOCATION.dubbo.com.jd.activemq.retry.service" level="WARN">
+    <appender-ref ref="INVOCATION"/>
+  </logger>
+  <logger name="org.springframework" level="DEBUG"/>
+  <logger name="org.apache.httpclient.wire" level="INFO"/>
+  <logger name="org.apache.commons.httpclient" level="INFO"/>
+
+  <root level="DEBUG">
+    <appender-ref ref="DETAIL"/>
+    <appender-ref ref="CONSOLE"/>
+  </root>
+</configuration>
+
+<!--
+
+#妯″紡绗﹀彿 - 鐢ㄩ��(闄勫姞璇存槑);{鍙�夐檮鍔犻�夐」}(闄勫姞閫夐」璇存槑)
+#  %c     - 鏃ュ織鍚嶇О(閫氬父鏄瀯閫犲嚱鏁扮殑鍙傛暟);{鏁板瓧}("a.b.c" 鐨勫悕绉颁娇鐢� %c{2} 浼氳緭鍑� "b.c")
+#  %C     - 璋冪敤鑰呯殑绫诲悕(閫熷害鎱�,涓嶆帹鑽愪娇鐢�);{鏁板瓧}(鍚屼笂)
+#  %d     - 鏃ュ織鏃堕棿;{SimpleDateFormat鎵�鑳戒娇鐢ㄧ殑鏍煎紡}
+#  %F     - 璋冪敤鑰呯殑鏂囦欢鍚�(閫熷害鏋佹參,涓嶆帹鑽愪娇鐢�)
+#  %l     - 璋冪敤鑰呯殑鍑芥暟鍚嶃�佹枃浠跺悕銆佽鍙�(閫熷害鏋佸叾鏋佸叾鎱�,涓嶆帹鑽愪娇鐢�)
+#  %L     - 璋冪敤鑰呯殑琛屽彿(閫熷害鏋佹參,涓嶆帹鑽愪娇鐢�)
+#  %m     - 鏃ュ織
+#  %M     - 璋冪敤鑰呯殑鍑芥暟鍚�(閫熷害鏋佹參,涓嶆帹鑽愪娇鐢�)
+#  %n     - 鎹㈣绗﹀彿
+#  %p     - 鏃ュ織浼樺厛绾у埆(DEBUG, INFO, WARN, ERROR)
+#  %r     - 杈撳嚭鏃ュ織鎵�鐢ㄦ绉掓暟
+#  %t     - 璋冪敤鑰呯殑杩涚▼鍚�
+#  %x     - Used to output the NDC (nested diagnostic context) associated with the thread that generated the logging event.
+#  %X     - Used to output the MDC (mapped diagnostic context) associated with the thread that generated the logging event.
+#
+#妯″紡淇グ绗� - 瀵归綈 - 鏈�灏忛暱搴� - 鏈�澶ч暱搴� - 璇存槑
+# %20c        鍙�      20         ~
+# %-20c      宸�       20         ~
+# %.30c       ~       ~          30
+# %20.30c     鍙�      20         30
+# %-20.30c   宸�       20         30
+
+-->

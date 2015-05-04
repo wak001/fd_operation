@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.haodaibao.fund.operation.dao.FbUnSignOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.haodaibao.fund.operation.domain.FbUnSignOrder" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="UNSIGN_ORDER_NO" property="unsignOrderNo" jdbcType="VARCHAR" />
+    <result column="CUST_ACC_NO" property="custAccNo" jdbcType="VARCHAR" />
+    <result column="CUST_SIGN_NO" property="custSignNo" jdbcType="VARCHAR" />
+    <result column="UNSIGN_STATUS" property="unsignStatus" jdbcType="VARCHAR" />
+    <result column="ORDER_TIME" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="ERROR_MSG" property="errorMsg" jdbcType="VARCHAR" />
+    <result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, UNSIGN_ORDER_NO, CUST_ACC_NO, CUST_SIGN_NO, UNSIGN_STATUS, ORDER_TIME, ERROR_MSG, 
+    CREATED_TIME, MODIFIED_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.haodaibao.fund.operation.domain.FbUnSignOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from fb_unsign_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from fb_unsign_order
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from fb_unsign_order
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.haodaibao.fund.operation.domain.FbUnSignOrderExample" >
+    delete from fb_unsign_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.haodaibao.fund.operation.domain.FbUnSignOrder" >
+    insert into fb_unsign_order (ID, UNSIGN_ORDER_NO, CUST_ACC_NO, 
+      CUST_SIGN_NO, UNSIGN_STATUS, ORDER_TIME, 
+      ERROR_MSG, CREATED_TIME, MODIFIED_TIME
+      )
+    values (#{id,jdbcType=BIGINT}, #{unsignOrderNo,jdbcType=VARCHAR}, #{custAccNo,jdbcType=VARCHAR}, 
+      #{custSignNo,jdbcType=VARCHAR}, #{unsignStatus,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, 
+      #{errorMsg,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.haodaibao.fund.operation.domain.FbUnSignOrder" >
+    insert into fb_unsign_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="unsignOrderNo != null" >
+        UNSIGN_ORDER_NO,
+      </if>
+      <if test="custAccNo != null" >
+        CUST_ACC_NO,
+      </if>
+      <if test="custSignNo != null" >
+        CUST_SIGN_NO,
+      </if>
+      <if test="unsignStatus != null" >
+        UNSIGN_STATUS,
+      </if>
+      <if test="orderTime != null" >
+        ORDER_TIME,
+      </if>
+      <if test="errorMsg != null" >
+        ERROR_MSG,
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME,
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="unsignOrderNo != null" >
+        #{unsignOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="custAccNo != null" >
+        #{custAccNo,jdbcType=VARCHAR},
+      </if>
+      <if test="custSignNo != null" >
+        #{custSignNo,jdbcType=VARCHAR},
+      </if>
+      <if test="unsignStatus != null" >
+        #{unsignStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null" >
+        #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="errorMsg != null" >
+        #{errorMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.haodaibao.fund.operation.domain.FbUnSignOrderExample" resultType="java.lang.Integer" >
+    select count(*) from fb_unsign_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update fb_unsign_order
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.unsignOrderNo != null" >
+        UNSIGN_ORDER_NO = #{record.unsignOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custAccNo != null" >
+        CUST_ACC_NO = #{record.custAccNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custSignNo != null" >
+        CUST_SIGN_NO = #{record.custSignNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unsignStatus != null" >
+        UNSIGN_STATUS = #{record.unsignStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderTime != null" >
+        ORDER_TIME = #{record.orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.errorMsg != null" >
+        ERROR_MSG = #{record.errorMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdTime != null" >
+        CREATED_TIME = #{record.createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedTime != null" >
+        MODIFIED_TIME = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update fb_unsign_order
+    set ID = #{record.id,jdbcType=BIGINT},
+      UNSIGN_ORDER_NO = #{record.unsignOrderNo,jdbcType=VARCHAR},
+      CUST_ACC_NO = #{record.custAccNo,jdbcType=VARCHAR},
+      CUST_SIGN_NO = #{record.custSignNo,jdbcType=VARCHAR},
+      UNSIGN_STATUS = #{record.unsignStatus,jdbcType=VARCHAR},
+      ORDER_TIME = #{record.orderTime,jdbcType=TIMESTAMP},
+      ERROR_MSG = #{record.errorMsg,jdbcType=VARCHAR},
+      CREATED_TIME = #{record.createdTime,jdbcType=TIMESTAMP},
+      MODIFIED_TIME = #{record.modifiedTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.haodaibao.fund.operation.domain.FbUnSignOrder" >
+    update fb_unsign_order
+    <set >
+      <if test="unsignOrderNo != null" >
+        UNSIGN_ORDER_NO = #{unsignOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="custAccNo != null" >
+        CUST_ACC_NO = #{custAccNo,jdbcType=VARCHAR},
+      </if>
+      <if test="custSignNo != null" >
+        CUST_SIGN_NO = #{custSignNo,jdbcType=VARCHAR},
+      </if>
+      <if test="unsignStatus != null" >
+        UNSIGN_STATUS = #{unsignStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null" >
+        ORDER_TIME = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="errorMsg != null" >
+        ERROR_MSG = #{errorMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.haodaibao.fund.operation.domain.FbUnSignOrder" >
+    update fb_unsign_order
+    set UNSIGN_ORDER_NO = #{unsignOrderNo,jdbcType=VARCHAR},
+      CUST_ACC_NO = #{custAccNo,jdbcType=VARCHAR},
+      CUST_SIGN_NO = #{custSignNo,jdbcType=VARCHAR},
+      UNSIGN_STATUS = #{unsignStatus,jdbcType=VARCHAR},
+      ORDER_TIME = #{orderTime,jdbcType=TIMESTAMP},
+      ERROR_MSG = #{errorMsg,jdbcType=VARCHAR},
+      CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
+      MODIFIED_TIME = #{modifiedTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
